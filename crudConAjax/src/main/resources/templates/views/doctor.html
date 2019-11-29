@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<!-- link de js -->
+<script type="text/javascript" th:src="@{/js/doctor.js}"></script>
+</head>
+<body>
+<div class="container">
+<table class="table mt-4">
+<thead class="thead-dark">
+<tr>
+<th>id</th>
+<th>nombre</th>
+<th>direccion</th>
+<th>idEspecialidad</th>
+</tr>
+</thead>
+<tbody id="tdatos">
+
+</tbody>
+</table>
+</div>
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script>
+			  $(document).ready(inicio);
+
+			  function inicio() {
+				    //peticion AJAX al back-end
+				$.ajax({
+				url:"/doctores/all",
+				method:"Get",
+				success:function(response){
+					
+					$("#tdatos").html("");
+					//se recorren los elementos del array 
+					//retornado como respuesta
+					for (let i = 0; i < response.length; i++) {
+							
+						$("#tdatos").append(""
+						+"<tr>"
+							+"<td>"+response[i].id+"</td>"
+							+"<td>"+response[i].nombre+"</td>"
+							+"<td>"+response[i].direccion+"</td>"
+							+"<td>"+response[i].especialidad.especialidad+"</td>"
+							
+					+"</tr>");
+					}
+				},
+					error:function(response){
+						//imprimo el mensaje de error
+						alert("Error en la peticion: "+response);
+					}
+			});
+			  }
+		  </script>
+</body>
+</html>
